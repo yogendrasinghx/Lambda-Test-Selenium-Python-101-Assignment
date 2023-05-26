@@ -32,7 +32,7 @@
   
   <h3>Running the Tests</h3>
   <p>To run the test scenarios, execute the following command in the project directory:</p>
-  <pre><code>py.test --worker 2 -v -s</code></pre>
+  <pre><code>py.test --workers 2 -v -s</code></pre>
   <p>The tests will be parallelly executed the tests using configured browser and platform combinations.</p>
   
   <h3>Viewing Test Results</h3>
