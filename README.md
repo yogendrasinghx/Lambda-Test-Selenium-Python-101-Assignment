@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Selenium Python 101 Test Scenarios</title>
+  
 </head>
 <body>
   <p>This Assignment demonstrates 3 test scenarios using Selenium and Python's pytest framework. The test scenarios involve automating interactions with the LambdaTest Selenium Playground.
@@ -27,7 +27,7 @@
   <h3>Configuration</h3>
   <p>Before running the tests, update the following variables in the code:</p>
   <ul>
-    <li>Replace &lt;username&gt; and &lt;access_key&gt; in both <code>conftest.py</code> and <code>test_scenario_2.py</code> files with your actual LambdaTest credentials.</li>
+    <li>Replace &lt;username&gt; and &lt;access_key&gt; in <code>conftest.py</code> file with your actual LambdaTest credentials.</li>
   </ul>
   
   <h3>Running the Tests</h3>
