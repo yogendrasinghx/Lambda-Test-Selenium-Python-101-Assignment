@@ -1,15 +1,17 @@
-from pageObjects.PlayGroundPage import PlayGroundPage
-from testData.SimpleFormDemoData import SimpleFormDemoData
-from utilities.BaseClass import BaseClass
+import pytest
+from pageObjects.SeleniumPlaygroundPage import SeleniumPlaygroundPage
+from pageObjects.SimpleFormDemo import SimpleFormDemo
 
 
-class TestScenario1(BaseClass):
-    def test_scenario_1(self):
-        driver = self.driver
-        playGroundPage = PlayGroundPage(driver)
-        simpleFormDemo = playGroundPage.click_simple_form_demo_link()
-        assert "simple-form-demo" in driver.current_url
-        message = SimpleFormDemoData.message
-        simpleFormDemo.get_message_textbox().send_keys(message)
-        simpleFormDemo.get_check_value_button().click()
-        assert message == simpleFormDemo.get_show_message().text
+@pytest.mark.usefixtures("driver_init")
+@pytest.mark.timeout(20)
+class TestScenario1:
+    def test_scenario_1(self, driver_init):
+        selenium_playground = SeleniumPlaygroundPage(driver_init)
+        selenium_playground.open_playground()
+        simple_form_demo = selenium_playground.click_simple_form_demo()
+        simple_form_demo.validate_url_contains("simple-form-demo")
+        message = "Welcome to LambdaTest"
+        simple_form_demo.enter_message(message)
+        simple_form_demo.click_get_checked_value()
+        simple_form_demo.validate_message_displayed(message)

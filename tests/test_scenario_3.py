@@ -1,43 +1,36 @@
-import time
-
-from pageObjects.InputFormDemo import InputFormDemo
-from pageObjects.PlayGroundPage import PlayGroundPage
+import pytest
+from pageObjects.SeleniumPlaygroundPage import SeleniumPlaygroundPage
 from testData.InputFormDemoData import InputFormDemoData
-from utilities.BaseClass import BaseClass
 
 
-class TestScenario3(BaseClass):
-    inputFormDemo = None
+@pytest.mark.usefixtures("driver_init")
+@pytest.mark.timeout(20)
+class TestScenario3:
+    def test_check_empty_form(self, driver_init):
+        selenium_playground = SeleniumPlaygroundPage(driver_init)
+        selenium_playground.open_playground()
 
-    def test_scenario_3_a(self):
-        global inputFormDemo
-        driver = self.driver
-        playGroundPage = PlayGroundPage(driver)
-        inputFormDemo = playGroundPage.click_input_form_submit_link()
+        input_form_submit = selenium_playground.click_input_form_submit()
+        input_form_submit.click_submit_button()
+        assert input_form_submit.validate_error_message("Please fill in the fields")
 
-        inputFormDemo.get_submit_button().click()
+    def test_validate_form_success(self,driver_init):
+        selenium_playground = SeleniumPlaygroundPage(driver_init)
+        selenium_playground.open_playground()
 
-        message = inputFormDemo.getRequiredMessage()
-
-        assert message == "Please fill in the fields"
-
-    def test_scenario_3_b(self):
-        inputFormDemo.get_name_field().send_keys(InputFormDemoData.data['name'])
-        inputFormDemo.get_email_field().send_keys(InputFormDemoData.data['email'])
-        inputFormDemo.get_website_field().send_keys(InputFormDemoData.data['website'])
-        inputFormDemo.get_password_field().send_keys(InputFormDemoData.data['password'])
-        inputFormDemo.get_company_field().send_keys(InputFormDemoData.data['company'])
-        inputFormDemo.get_city_field().send_keys(InputFormDemoData.data['city'])
-        inputFormDemo.get_state_field().send_keys(InputFormDemoData.data['state'])
-        inputFormDemo.get_address_field1().send_keys(InputFormDemoData.data['address1'])
-        inputFormDemo.get_address_field2().send_keys(InputFormDemoData.data['address2'])
-        inputFormDemo.get_zipcode_field().send_keys(InputFormDemoData.data['zipcode'])
-
-        inputFormDemo.select_country_field(InputFormDemoData.data['country'])
-
-        inputFormDemo.get_submit_button().click()
-
-        submit_message = InputFormDemoData.data['submit_message']
-
-        assert submit_message == inputFormDemo.get_submit_message().text
-
+        input_form_submit = selenium_playground.click_input_form_submit()
+        input_form_submit.close_popup()
+        input_form_submit.fill_name(InputFormDemoData.data['name'])
+        input_form_submit.fill_email(InputFormDemoData.data['email'])
+        input_form_submit.fill_password(InputFormDemoData.data['password'])
+        input_form_submit.fill_company(InputFormDemoData.data['company'])
+        input_form_submit.fill_website(InputFormDemoData.data['website'])
+        input_form_submit.select_country(InputFormDemoData.data['country'])
+        input_form_submit.fill_city(InputFormDemoData.data['city'])
+        input_form_submit.fill_address1(InputFormDemoData.data['address1'])
+        input_form_submit.fill_address2(InputFormDemoData.data['address2'])
+        input_form_submit.fill_state(InputFormDemoData.data['state'])
+        input_form_submit.fill_zipcode(InputFormDemoData.data['zipcode'])
+        input_form_submit.click_submit_button()
+        success_message = "Thanks for contacting us, we will get back to you shortly."
+        assert input_form_submit.validate_success_message(success_message)
