@@ -75,7 +75,7 @@ class InputFormSubmit:
 
     def validate_success_message(self, expected_message):
         success_message = self.driver.find_element(*InputFormSubmit.success_message).text
-        change_test_status(success_message == expected_message)
+        change_test_status(self.driver,success_message == expected_message)
         return success_message == expected_message
 
     def close_popup(self):
