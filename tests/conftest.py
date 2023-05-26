@@ -18,8 +18,8 @@ def driver_init(request):
     test_name = request.node.name
     build = environ.get('BUILD', "Selenium Python 101")
     tunnel_id = environ.get('TUNNEL', False)
-    username = "yogendra.ducs19"
-    access_key = "c3AJzeAfdYlratBAcJ1kg4FLOkeMw6EHL54ytpjE6QaFnN1OoY"
+    username = "YOUR_USERNAME"
+    access_key = "YOUR_KEY"
 
     selenium_endpoint = "http://{}:{}@hub.lambdatest.com/wd/hub".format(username, access_key)
     desired_caps['build'] = build
@@ -29,26 +29,13 @@ def driver_init(request):
     desired_caps['network'] = True
     desired_caps['console'] = True
     caps = {"LT:Options": desired_caps}
-    '''
+    
     executor = RemoteConnection(selenium_endpoint)
     driver = webdriver.Remote(
         command_executor=executor,
         desired_capabilities=caps
     )
-    '''
-    browser_name = 'chrome'
-    if browser_name == 'chrome':
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service)
-
-    elif browser_name == 'firefox':
-        service = Service(GeckoDriverManager().install())
-        driver = webdriver.Firefox(service=service)
-
-    elif browser_name == 'edge':
-        service = Service(EdgeChromiumDriverManager().install())
-        driver = webdriver.Edge(service=service)
-
+    
     driver.maximize_window()
     driver.implicitly_wait(5)
 
